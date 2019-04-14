@@ -29,3 +29,7 @@ variable "cluster_vm_count" {
 variable "cluster_vm_size" {
   description = "The size of each VM in the AKS Agent Pool"
 }
+
+variable "bigip_dns_prefix" {
+  description = "The Public DNS prefix for your BigIP"
+}

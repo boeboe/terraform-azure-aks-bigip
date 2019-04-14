@@ -85,8 +85,9 @@ resource "azurerm_resource_group" "resource_group" {
 module "kubernetes" {
   source = "modules/kubernetes"
 
-  environment        = "${var.environment}"
-  user               = "${var.user}"
+  environment = "${var.environment}"
+  user        = "${var.user}"
+
   location           = "${azurerm_resource_group.resource_group.location}"
   resource_group     = "${azurerm_resource_group.resource_group.name}"
   cluster_name       = "${var.cluster_name}"
@@ -98,10 +99,14 @@ module "kubernetes" {
 module "bigip" {
   source = "modules/bigip"
 
-  bigip_admin_password             = "admin123"
-  bigip_dns_label                  = "bigip.${module.kubernetes.cluster_fqdn}"
+  environment = "${var.environment}"
+  user        = "${var.user}"
+
+  bigip_admin_user                 = "Admin123."
+  bigip_admin_password             = "Admin123."
+  bigip_dns_prefix                 = "${var.bigip_dns_prefix}"
   bigip_vnet_name                  = "${module.kubernetes.cluster_node_vnet_name}"
   bigip_vnet_resource_group_name   = "${module.kubernetes.cluster_node_resource_group_name}"
   bigip_mgmt_subnet_address_prefix = "10.1.0.0/16"
-  bigip_mgmt_ip_address            = "10.1.0.1"
+  bigip_mgmt_ip_address            = "10.1.0.100"
 }

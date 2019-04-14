@@ -9,8 +9,12 @@ data "template_file" "bigip_azuredeploy_parameters" {
   template = "${file("${path.module}/templates/azuredeploy.parameters.json")}"
 
   vars {
+    environment = "${var.environment}"
+    user        = "${var.user}"
+
+    bigip_admin_user               = "${var.bigip_admin_user}"
     bigip_admin_password           = "${var.bigip_admin_password}"
-    bigip_dns_label                = "${var.bigip_dns_label}"
+    bigip_dns_prefix               = "${var.bigip_dns_prefix}"
     bigip_vnet_name                = "${var.bigip_vnet_name}"
     bigip_vnet_resource_group_name = "${var.bigip_vnet_resource_group_name}"
     bigip_mgmt_subnet_name         = "${azurerm_subnet.bigip_mgmt_subnet.name}"
