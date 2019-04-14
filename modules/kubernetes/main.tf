@@ -50,6 +50,6 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
   }
 }
 
-data "external" "cluster_vnet_name" {
+data "external" "cluster_nodes_vnet_name" {
   program = ["bash", "${path.module}/scripts/get_vnet_name.sh", "${azurerm_kubernetes_cluster.k8s_cluster.node_resource_group}"]
 }

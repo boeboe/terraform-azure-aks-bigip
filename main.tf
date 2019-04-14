@@ -100,8 +100,8 @@ module "bigip" {
 
   bigip_admin_password             = "admin123"
   bigip_dns_label                  = "bigip.${module.kubernetes.cluster_fqdn}"
-  bigip_vnet_name                  = "${module.kubernetes.cluster_vnet_name}"
-  bigip_vnet_resource_group_name   = "${azurerm_resource_group.resource_group.name}"
+  bigip_vnet_name                  = "${module.kubernetes.cluster_node_vnet_name}"
+  bigip_vnet_resource_group_name   = "${module.kubernetes.cluster_node_resource_group_name}"
   bigip_mgmt_subnet_address_prefix = "10.1.0.0/16"
   bigip_mgmt_ip_address            = "10.1.0.1"
 }
