@@ -12,6 +12,12 @@ resource "azuread_service_principal_password" "k8s_service_principal_password" {
   service_principal_id = "${azuread_service_principal.k8s_service_principal.id}"
   value                = "00000000000000000000000000000000"
   end_date             = "2020-01-01T01:02:03Z"
+
+  # Bug work around: wait some time for service principle to be ready before proceeding 
+  # cfr https://github.com/terraform-providers/terraform-provider-azuread/issues/4
+  provisioner "local-exec" {
+    command = "sleep 30"
+  }
 }
 
 resource "azurerm_kubernetes_cluster" "k8s_cluster" {
