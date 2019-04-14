@@ -70,6 +70,8 @@ function apply {
     terraform plan -var-file=config/${env}.tfvars
     terraform apply -var-file=config/${env}.tfvars -input=false -auto-approve
     print_info "Apply deployment to ${env} environment finished"
+
+    prepare-kubectl ${env}
 }
 
 # Destroy terraform deployment
@@ -80,6 +82,14 @@ function destroy {
     terraform plan -var-file=config/${env}.tfvars -destroy
     terraform destroy -var-file=config/${env}.tfvars -input=false
     print_info "Destroying deployment to ${env} environment finished"
+}
+
+function prepare-kubectl {
+    export env=$1
+    print_info "Preparing kubectl to use ${env} cluster"
+    echo "$(terraform output kube_config)" > ./azurek8s-${env}
+    print_info "Execute the following export:
+        export KUBECONFIG=./azurek8s-${env}"
 }
 
 version

@@ -13,11 +13,15 @@ provider "azurerm" {
 }
 
 provider "azuread" {
-  version = "=0.1.0"
+  version = "=0.2.0"
 }
 
 provider "template" {
   version = "~> 1.0"
+}
+
+provider "external" {
+  version = "=1.1.0"
 }
 
 # data "template_file" "policy_rule_tag_env" {
@@ -89,4 +93,15 @@ module "kubernetes" {
   cluster_dns_prefix = "${var.cluster_dns_prefix}"
   cluster_vm_count   = "${var.cluster_vm_count}"
   cluster_vm_size    = "${var.cluster_vm_size}"
+}
+
+module "bigip" {
+  source = "modules/bigip"
+
+  bigip_admin_password             = "admin123"
+  bigip_dns_label                  = "bigip.${module.kubernetes.cluster_fqdn}"
+  bigip_vnet_name                  = "${module.kubernetes.cluster_vnet_name}"
+  bigip_vnet_resource_group_name   = "${azurerm_resource_group.resource_group.name}"
+  bigip_mgmt_subnet_address_prefix = "10.1.0.0/16"
+  bigip_mgmt_ip_address            = "10.1.0.1"
 }

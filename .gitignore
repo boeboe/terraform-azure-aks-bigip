@@ -3,3 +3,5 @@
 *.tfplan
 terraform.tfstate.d
 
+# Cluster credentials
+azurek8s*

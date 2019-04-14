@@ -39,8 +39,17 @@ resource "azurerm_kubernetes_cluster" "k8s_cluster" {
     client_secret = "${azuread_service_principal_password.k8s_service_principal_password.value}"
   }
 
+  # Wait for flannel to be supported
+  # network_profile {
+  #   network_plugin = "flannel"
+  # }
+
   tags = {
     Environment = "${var.environment}"
     User        = "${var.user}"
   }
+}
+
+data "external" "cluster_vnet_name" {
+  program = ["bash", "${path.module}/scripts/get_vnet_name.sh", "${azurerm_kubernetes_cluster.k8s_cluster.node_resource_group}"]
 }
