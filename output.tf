@@ -10,10 +10,6 @@ output "kube_config" {
   value = "${module.kubernetes.kube_config}"
 }
 
-output "bigip_gui_url" {
-  value = "${module.bigip.bigip_gui_url}"
-}
-
-output "bigip_ssh_url" {
-  value = "${module.bigip.bigip_ssh_url}"
+output "bigip_arm_output" {
+  value = "${module.bigip.bigip_arm_output}"
 }
