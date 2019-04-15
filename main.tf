@@ -102,8 +102,8 @@ module "bigip" {
   environment = "${var.environment}"
   user        = "${var.user}"
 
-  bigip_admin_user                 = "Admin123."
-  bigip_admin_password             = "Admin123."
+  bigip_admin_user                 = "${var.bigip_admin_user}"
+  bigip_admin_password             = "${var.bigip_admin_password}"
   bigip_dns_prefix                 = "${var.bigip_dns_prefix}"
   bigip_vnet_name                  = "${module.kubernetes.cluster_node_vnet_name}"
   bigip_vnet_resource_group_name   = "${module.kubernetes.cluster_node_resource_group_name}"
